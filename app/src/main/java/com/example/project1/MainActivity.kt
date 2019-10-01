@@ -9,14 +9,19 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
     private var counter: Long = 0
     fun getStore() = getPreferences(Context.MODE_PRIVATE)
+    var COOKIE_COUNTER_KEY = "cookieCounterKey"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val usrname = intent.extras?.get("username").toString().trim()
+        COOKIE_COUNTER_KEY = usrname
+
         if(savedInstanceState != null){
-            counter = savedInstanceState.getLong(COOKIE_COUNTER_KEY,0)
-            score.text = counter.toString()
+            updateCounter(savedInstanceState.getLong(COOKIE_COUNTER_KEY, 0))
+        }else if (getStore().contains(COOKIE_COUNTER_KEY)){
+            updateCounter(getStore().getLong(COOKIE_COUNTER_KEY, 0))
         }
 
         myButton.setOnClickListener {
@@ -34,6 +39,11 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    private fun updateCounter(count:Long){
+        counter = count
+        score.text = "score $(counter.toString())"
+    }
+
     override fun onPause(){
         super.onPause()
         getStore().edit().putLong(COOKIE_COUNTER_KEY, counter).apply()
@@ -48,7 +58,4 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    companion object {
-        private const val COOKIE_COUNTER_KEY = "cookieCounterKey"
-    }
 }
