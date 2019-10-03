@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun updateCounter(count:Long){
         counter = count
-        score.text = "Cookie Counter!"
+        score.text = "Score: ${counter.toString()}"
     }
 
     override fun onPause(){
