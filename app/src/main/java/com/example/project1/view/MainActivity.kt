@@ -1,13 +1,15 @@
 package com.example.project1.view
 
-import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.RelativeLayout
+import com.bumptech.glide.Glide
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import com.example.project1.model.Gif
 import com.example.project1.R
 import com.example.project1.viewmodel.CountViewModel
+import com.example.project1.viewmodel.GifViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 
@@ -15,6 +17,7 @@ class MainActivity : AppCompatActivity() {
 
     //initialized the counter view model counter without needing an intial value
     private lateinit var countViewModel: CountViewModel
+    private lateinit var gifViewModel: GifViewModel
     private var counter: Long = 0
 
     //initializing function to take string entered from the login
@@ -29,6 +32,10 @@ class MainActivity : AppCompatActivity() {
         countViewModel = ViewModelProviders.of(this).get(CountViewModel::class.java)
         countViewModel.getUserCount((getUserName())).observe(this,
             androidx.lifecycle.Observer { updateCounter(it) })
+
+        gifViewModel = ViewModelProviders.of(this).get(GifViewModel::class.java)
+        gifViewModel.getRandomGif("android").observe(this,
+            androidx.lifecycle.Observer { loadGif(it) })
 
         //initializes counter to be used for changing flower type
         var flowerCounter = counter
@@ -87,6 +94,13 @@ class MainActivity : AppCompatActivity() {
     private fun updateCounter(count:Long){
         counter = count
         score.text = "Score: ${counter.toString()}"
+    }
+
+    private fun loadGif(gif: Gif){
+        Glide.with(this)
+            .load(gif.url)
+            .into(image)
+
     }
 
    // override fun onPause(){
