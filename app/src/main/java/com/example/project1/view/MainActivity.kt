@@ -1,6 +1,7 @@
 package com.example.project1.view
 
 import android.content.Intent
+import android.icu.util.Calendar
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.bumptech.glide.Glide
@@ -8,9 +9,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.example.project1.model.Gif
 import com.example.project1.R
+import com.example.project1.util.AlarmManager
 import com.example.project1.viewmodel.CountViewModel
 import com.example.project1.viewmodel.GifViewModel
 import kotlinx.android.synthetic.main.activity_main.*
+import java.util.concurrent.atomic.LongAdder
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
@@ -28,6 +31,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        val calendar = Calendar.getInstance()
+        calendar.add(Calendar.SECOND, 10)
+        AlarmManager.setAlarm(applicationContext, calendar.timeInMillis, "Test Message!")
 
         countViewModel = ViewModelProviders.of(this).get(CountViewModel::class.java)
         countViewModel.getUserCount((getUserName())).observe(this,

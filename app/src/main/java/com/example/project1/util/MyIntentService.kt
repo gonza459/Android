@@ -17,7 +17,7 @@ class MyIntentService : IntentService("MyIntentService") {
     }
 
     companion object {
-        const val ACTION_SEND_TEST_MESSAGE = "ACTION_SEND_TEST_MESSAGE"
+        const val ACTION_SEND_TEST_MESSAGE = "Come Back!"
         const val EXTRA_MESSAGE = "EXTRA_MESSAGE"
     }
 
