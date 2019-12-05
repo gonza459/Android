@@ -1,7 +1,8 @@
 package com.example.project1.view
 
-import android.content.Intent
+import android.content.Context
 import android.icu.util.Calendar
+import android.icu.util.Calendar.getInstance
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.bumptech.glide.Glide
@@ -32,9 +33,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val calendar = Calendar.getInstance()
+        val calendar = getInstance()
         calendar.add(Calendar.SECOND, 10)
-        AlarmManager.setAlarm(applicationContext, calendar.timeInMillis, "Test Message!")
+        AlarmManager.setAlarm(applicationContext, calendar.timeInMillis, "Come Back!")
 
         countViewModel = ViewModelProviders.of(this).get(CountViewModel::class.java)
         countViewModel.getUserCount((getUserName())).observe(this,
